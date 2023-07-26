@@ -114,6 +114,8 @@ Any object.
 | --- | --- | --- |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLogger.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLogger.property.eventBus">eventBus</a></code> | <code>aws-cdk-lib.aws_events.EventBus</code> | *No description.* |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLogger.property.logGroup">logGroup</a></code> | <code>aws-cdk-lib.aws_logs.LogGroup</code> | *No description.* |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLogger.property.logRule">logRule</a></code> | <code>aws-cdk-lib.aws_events.Rule</code> | *No description.* |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLogger.property.policy">policy</a></code> | <code>aws-cdk-lib.aws_events.CfnEventBusPolicy</code> | *No description.* |
 
 ---
@@ -140,7 +142,27 @@ public readonly eventBus: EventBus;
 
 ---
 
-##### `policy`<sup>Required</sup> <a name="policy" id="cdk-eventbridge-with-logger.EventbridgeWithLogger.property.policy"></a>
+##### `logGroup`<sup>Required</sup> <a name="logGroup" id="cdk-eventbridge-with-logger.EventbridgeWithLogger.property.logGroup"></a>
+
+```typescript
+public readonly logGroup: LogGroup;
+```
+
+- *Type:* aws-cdk-lib.aws_logs.LogGroup
+
+---
+
+##### `logRule`<sup>Required</sup> <a name="logRule" id="cdk-eventbridge-with-logger.EventbridgeWithLogger.property.logRule"></a>
+
+```typescript
+public readonly logRule: Rule;
+```
+
+- *Type:* aws-cdk-lib.aws_events.Rule
+
+---
+
+##### `policy`<sup>Optional</sup> <a name="policy" id="cdk-eventbridge-with-logger.EventbridgeWithLogger.property.policy"></a>
 
 ```typescript
 public readonly policy: CfnEventBusPolicy;
@@ -168,6 +190,7 @@ const eventbridgeWithLoggerProps: EventbridgeWithLoggerProps = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.eventBusProps">eventBusProps</a></code> | <code>aws-cdk-lib.aws_events.EventBusProps</code> | *No description.* |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.allowPutEventsFromLocalBuses">allowPutEventsFromLocalBuses</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.enableCrossEnvironment">enableCrossEnvironment</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.loggerEventPattern">loggerEventPattern</a></code> | <code>aws-cdk-lib.aws_events.EventPattern</code> | *No description.* |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logRetention">logRetention</a></code> | <code>aws-cdk-lib.aws_logs.RetentionDays</code> | *No description.* |
@@ -181,6 +204,16 @@ public readonly eventBusProps: EventBusProps;
 ```
 
 - *Type:* aws-cdk-lib.aws_events.EventBusProps
+
+---
+
+##### `allowPutEventsFromLocalBuses`<sup>Optional</sup> <a name="allowPutEventsFromLocalBuses" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.allowPutEventsFromLocalBuses"></a>
+
+```typescript
+public readonly allowPutEventsFromLocalBuses: boolean;
+```
+
+- *Type:* boolean
 
 ---
 

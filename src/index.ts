@@ -16,11 +16,14 @@ export interface EventbridgeWithLoggerProps {
   readonly eventBusProps: EventBusProps;
   readonly loggerEventPattern?: EventPattern;
   readonly enableCrossEnvironment?: boolean;
+  readonly allowPutEventsFromLocalBuses?: boolean;
 };
 
 export class EventbridgeWithLogger extends Construct {
   eventBus: EventBus;
-  policy: CfnEventBusPolicy;
+  policy?: CfnEventBusPolicy;
+  logGroup: LogGroup;
+  logRule: Rule;
   constructor(scope: Construct, id: string, props: EventbridgeWithLoggerProps) {
     super(scope, id);
     const {
@@ -28,6 +31,7 @@ export class EventbridgeWithLogger extends Construct {
       logRetention,
       enableCrossEnvironment,
       loggerEventPattern,
+      allowPutEventsFromLocalBuses,
     } = props;
 
     // Event bus setup
@@ -36,19 +40,22 @@ export class EventbridgeWithLogger extends Construct {
     if (enableCrossEnvironment) {
       bus._enableCrossEnvironment();
     }
-    // allow same-account same-region buses to send events to our local bus
-    const policy = new CfnEventBusPolicy(this, 'AllowPutEventsFromLocalBuses', {
-      eventBusName: bus.eventBusName,
-      statementId: `${normalizedId}-allow-put-events-from-local-buses`,
-      statement: {
-        Principal: { AWS: Stack.of(this).account },
-        Action: 'events:PutEvents',
-        Resource: bus.eventBusArn,
-        Effect: 'Allow',
-      },
-    });
 
-    const busEventLoggerRule = new Rule(this, 'BusEventLoggerRule', {
+    if (allowPutEventsFromLocalBuses) {
+      // allow same-account same-region buses to send events to our local bus
+      const policy = new CfnEventBusPolicy(this, 'AllowPutEventsFromLocalBuses', {
+        eventBusName: bus.eventBusName,
+        statementId: `${normalizedId}-allow-put-events-from-local-buses`,
+        statement: {
+          Principal: { AWS: Stack.of(this).account },
+          Action: 'events:PutEvents',
+          Resource: bus.eventBusArn,
+          Effect: 'Allow',
+        },
+      });
+      this.policy = policy;
+    }
+    const logRule = new Rule(this, 'LogRule', {
       ruleName: `${normalizedId}-log-all-ingress-events`,
       description: 'Log all ingress events',
       eventPattern: loggerEventPattern || {
@@ -57,14 +64,15 @@ export class EventbridgeWithLogger extends Construct {
       eventBus: bus,
     });
 
-    const busLogGroup = new LogGroup(this, 'BusLogGroup', {
+    const logGroup = new LogGroup(this, 'LogGroup', {
       logGroupName: `/aws/events/${eventBusProps.eventBusName}/all-ingress-events`,
       retention: logRetention,
     });
 
-    busEventLoggerRule.addTarget(new CloudWatchLogGroup(busLogGroup));
+    logRule.addTarget(new CloudWatchLogGroup(logGroup));
 
     this.eventBus = bus;
-    this.policy = policy;
+    this.logGroup = logGroup;
+    this.logRule = logRule;
   }
 }
