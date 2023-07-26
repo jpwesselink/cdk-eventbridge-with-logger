@@ -2,6 +2,8 @@
 
 This is a CDK construct library that allows you to easily create an EventBridge event bus with a CloudWatch log group and a CloudWatch log stream.
 
+Consider this an easy landing without having to think about it.
+
 ## Usage
 
 ```typescript
@@ -189,13 +191,13 @@ const eventbridgeWithLoggerProps: EventbridgeWithLoggerProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.allowPutEventsFromLocalBuses">allowPutEventsFromLocalBuses</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.enableCrossEnvironment">enableCrossEnvironment</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.eventBusProps">eventBusProps</a></code> | <code>aws-cdk-lib.aws_events.EventBusProps</code> | *No description.* |
-| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.existingEventBusInterface">existingEventBusInterface</a></code> | <code>aws-cdk-lib.aws_events.EventBus</code> | *No description.* |
-| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.loggerEventPattern">loggerEventPattern</a></code> | <code>aws-cdk-lib.aws_events.EventPattern</code> | *No description.* |
-| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logGroupName">logGroupName</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logRetention">logRetention</a></code> | <code>aws-cdk-lib.aws_logs.RetentionDays</code> | *No description.* |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.allowPutEventsFromLocalBuses">allowPutEventsFromLocalBuses</a></code> | <code>boolean</code> | Allow same-account same-region buses to send events to our local bus. |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.enableCrossEnvironment">enableCrossEnvironment</a></code> | <code>boolean</code> | Generates a physical name for this resource during synthesis, so the resource can be referenced through its absolute name/arn. |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.eventBusProps">eventBusProps</a></code> | <code>aws-cdk-lib.aws_events.EventBusProps</code> | Properties for a new event bus If you provide both an existing event bus and event bus props, an error will be thrown If you provide neither an existing event bus nor event bus props, an error will be thrown. |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.existingEventBusInterface">existingEventBusInterface</a></code> | <code>aws-cdk-lib.aws_events.EventBus</code> | An existing event bus to use. |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.loggerEventPattern">loggerEventPattern</a></code> | <code>aws-cdk-lib.aws_events.EventPattern</code> | The event pattern to use for the logger rule, defaults to events in the current region. |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logGroupName">logGroupName</a></code> | <code>string</code> | The name of the log group to create, defaults to '/aws/events/{eventBusName}/ingress'. |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logRetention">logRetention</a></code> | <code>aws-cdk-lib.aws_logs.RetentionDays</code> | The log retention for the log group. |
 
 ---
 
@@ -207,6 +209,8 @@ public readonly allowPutEventsFromLocalBuses: boolean;
 
 - *Type:* boolean
 
+Allow same-account same-region buses to send events to our local bus.
+
 ---
 
 ##### `enableCrossEnvironment`<sup>Optional</sup> <a name="enableCrossEnvironment" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.enableCrossEnvironment"></a>
@@ -216,6 +220,8 @@ public readonly enableCrossEnvironment: boolean;
 ```
 
 - *Type:* boolean
+
+Generates a physical name for this resource during synthesis, so the resource can be referenced through its absolute name/arn.
 
 ---
 
@@ -227,6 +233,8 @@ public readonly eventBusProps: EventBusProps;
 
 - *Type:* aws-cdk-lib.aws_events.EventBusProps
 
+Properties for a new event bus If you provide both an existing event bus and event bus props, an error will be thrown If you provide neither an existing event bus nor event bus props, an error will be thrown.
+
 ---
 
 ##### `existingEventBusInterface`<sup>Optional</sup> <a name="existingEventBusInterface" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.existingEventBusInterface"></a>
@@ -236,6 +244,8 @@ public readonly existingEventBusInterface: EventBus;
 ```
 
 - *Type:* aws-cdk-lib.aws_events.EventBus
+
+An existing event bus to use.
 
 ---
 
@@ -247,6 +257,8 @@ public readonly loggerEventPattern: EventPattern;
 
 - *Type:* aws-cdk-lib.aws_events.EventPattern
 
+The event pattern to use for the logger rule, defaults to events in the current region.
+
 ---
 
 ##### `logGroupName`<sup>Optional</sup> <a name="logGroupName" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logGroupName"></a>
@@ -257,6 +269,8 @@ public readonly logGroupName: string;
 
 - *Type:* string
 
+The name of the log group to create, defaults to '/aws/events/{eventBusName}/ingress'.
+
 ---
 
 ##### `logRetention`<sup>Optional</sup> <a name="logRetention" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logRetention"></a>
@@ -266,6 +280,8 @@ public readonly logRetention: RetentionDays;
 ```
 
 - *Type:* aws-cdk-lib.aws_logs.RetentionDays
+
+The log retention for the log group.
 
 ---
 

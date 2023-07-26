@@ -2,6 +2,8 @@
 
 This is a CDK construct library that allows you to easily create an EventBridge event bus with a CloudWatch log group and a CloudWatch log stream.
 
+Consider this an easy landing without having to think about it.
+
 ## Usage
 
 ```typescript
