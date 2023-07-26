@@ -189,21 +189,13 @@ const eventbridgeWithLoggerProps: EventbridgeWithLoggerProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.eventBusProps">eventBusProps</a></code> | <code>aws-cdk-lib.aws_events.EventBusProps</code> | *No description.* |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.allowPutEventsFromLocalBuses">allowPutEventsFromLocalBuses</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.enableCrossEnvironment">enableCrossEnvironment</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.eventBusProps">eventBusProps</a></code> | <code>aws-cdk-lib.aws_events.EventBusProps</code> | *No description.* |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.existingEventBusInterface">existingEventBusInterface</a></code> | <code>aws-cdk-lib.aws_events.EventBus</code> | *No description.* |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.loggerEventPattern">loggerEventPattern</a></code> | <code>aws-cdk-lib.aws_events.EventPattern</code> | *No description.* |
+| <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logGroupName">logGroupName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logRetention">logRetention</a></code> | <code>aws-cdk-lib.aws_logs.RetentionDays</code> | *No description.* |
-
----
-
-##### `eventBusProps`<sup>Required</sup> <a name="eventBusProps" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.eventBusProps"></a>
-
-```typescript
-public readonly eventBusProps: EventBusProps;
-```
-
-- *Type:* aws-cdk-lib.aws_events.EventBusProps
 
 ---
 
@@ -227,6 +219,26 @@ public readonly enableCrossEnvironment: boolean;
 
 ---
 
+##### `eventBusProps`<sup>Optional</sup> <a name="eventBusProps" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.eventBusProps"></a>
+
+```typescript
+public readonly eventBusProps: EventBusProps;
+```
+
+- *Type:* aws-cdk-lib.aws_events.EventBusProps
+
+---
+
+##### `existingEventBusInterface`<sup>Optional</sup> <a name="existingEventBusInterface" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.existingEventBusInterface"></a>
+
+```typescript
+public readonly existingEventBusInterface: EventBus;
+```
+
+- *Type:* aws-cdk-lib.aws_events.EventBus
+
+---
+
 ##### `loggerEventPattern`<sup>Optional</sup> <a name="loggerEventPattern" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.loggerEventPattern"></a>
 
 ```typescript
@@ -234,6 +246,16 @@ public readonly loggerEventPattern: EventPattern;
 ```
 
 - *Type:* aws-cdk-lib.aws_events.EventPattern
+
+---
+
+##### `logGroupName`<sup>Optional</sup> <a name="logGroupName" id="cdk-eventbridge-with-logger.EventbridgeWithLoggerProps.property.logGroupName"></a>
+
+```typescript
+public readonly logGroupName: string;
+```
+
+- *Type:* string
 
 ---
 

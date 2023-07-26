@@ -12,11 +12,13 @@ import { paramCase } from 'change-case';
 import { Construct } from 'constructs';
 
 export interface EventbridgeWithLoggerProps {
+  readonly existingEventBusInterface?: EventBus;
+  readonly eventBusProps?: EventBusProps;
   readonly logRetention?: RetentionDays;
-  readonly eventBusProps: EventBusProps;
   readonly loggerEventPattern?: EventPattern;
   readonly enableCrossEnvironment?: boolean;
   readonly allowPutEventsFromLocalBuses?: boolean;
+  readonly logGroupName?: string;
 };
 
 export class EventbridgeWithLogger extends Construct {
@@ -27,51 +29,53 @@ export class EventbridgeWithLogger extends Construct {
   constructor(scope: Construct, id: string, props: EventbridgeWithLoggerProps) {
     super(scope, id);
     const {
+      existingEventBusInterface,
       eventBusProps,
       logRetention,
       enableCrossEnvironment,
       loggerEventPattern,
       allowPutEventsFromLocalBuses,
+      logGroupName,
     } = props;
 
     // Event bus setup
-    const bus = new EventBus(this, 'Bus', eventBusProps);
+    const eventBus = existingEventBusInterface || new EventBus(this, 'Bus', eventBusProps);
     const normalizedId = paramCase(id);
     if (enableCrossEnvironment) {
-      bus._enableCrossEnvironment();
+      eventBus._enableCrossEnvironment();
     }
 
     if (allowPutEventsFromLocalBuses) {
       // allow same-account same-region buses to send events to our local bus
       const policy = new CfnEventBusPolicy(this, 'AllowPutEventsFromLocalBuses', {
-        eventBusName: bus.eventBusName,
+        eventBusName: eventBus.eventBusName,
         statementId: `${normalizedId}-allow-put-events-from-local-buses`,
         statement: {
           Principal: { AWS: Stack.of(this).account },
           Action: 'events:PutEvents',
-          Resource: bus.eventBusArn,
+          Resource: eventBus.eventBusArn,
           Effect: 'Allow',
         },
       });
       this.policy = policy;
     }
     const logRule = new Rule(this, 'LogRule', {
-      ruleName: `${normalizedId}-log-all-ingress-events`,
+      ruleName: `${normalizedId}-ingress-region-${Stack.of(this).region}`,
       description: 'Log all ingress events',
       eventPattern: loggerEventPattern || {
         region: [Stack.of(this).region],
       },
-      eventBus: bus,
+      eventBus: eventBus,
     });
 
     const logGroup = new LogGroup(this, 'LogGroup', {
-      logGroupName: `/aws/events/${eventBusProps.eventBusName}/all-ingress-events`,
+      logGroupName: `/aws/events/${eventBus.eventBusName}/${logGroupName || 'ingress'}`,
       retention: logRetention,
     });
 
     logRule.addTarget(new CloudWatchLogGroup(logGroup));
 
-    this.eventBus = bus;
+    this.eventBus = eventBus;
     this.logGroup = logGroup;
     this.logRule = logRule;
   }
